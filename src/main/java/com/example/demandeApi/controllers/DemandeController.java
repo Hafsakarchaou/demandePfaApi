@@ -34,16 +34,21 @@ public class DemandeController {
         return demandeService.findAll();
     }
     @PostMapping("")
-    public Demande save(@RequestBody Demande entity) {
-        return demandeService.save(entity);
+    public void save(@RequestBody Demande entity) {
+         demandeService.save(entity);
     }
     @GetMapping("/id/{id}")
     public Demande findById(@PathVariable int id) {
         return demandeService.findById(id);
     }
-    @DeleteMapping("id/{id}")
-    public void deleteById(int aLong) {
-        demandeService.deleteById(aLong);
+    
+    @GetMapping("/userid/{userId}")
+    public List<Demande> findByUserId(@PathVariable Long userId) {
+		return demandeService.findByUserId(userId);
+	}
+	@DeleteMapping("/id/{id}")
+    public void delete(@PathVariable String id) {
+        demandeService.delete(id);
     }
     
     @PutMapping("/update/{id}")
@@ -58,6 +63,14 @@ public class DemandeController {
 	public void refus(@PathVariable String id) {
 		demandeService.refus(id);
 	}
+    
+    @PutMapping("/updatemotf/{id}")
+    public void updateDemandeMotf(@PathVariable String id, @RequestBody Demande o) {
+		//int demandeId = Integer.parseInt(id);
+
+        demandeService.updatemotf(id,o);
+	}
+
     
     
 }

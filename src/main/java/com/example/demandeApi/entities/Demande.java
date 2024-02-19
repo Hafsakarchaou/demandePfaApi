@@ -1,10 +1,19 @@
 package com.example.demandeApi.entities;
 
-import com.example.demandeApi.security.springjwt.models.User;
-
-import javax.persistence.*;
-
 import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.example.demandeApi.security.springjwt.models.User;
 
 
 @Entity
@@ -17,11 +26,61 @@ public class Demande {
     private String type;
     private LocalDate date;
     private String etat;
+    private String motifRefus;
+    @OneToMany(mappedBy = "demande", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Notification> notifications;
+
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    
+    
+    public Demande(String des, String type, LocalDate date, String etat, String motifRefus,
+			List<Notification> notifications, User user) {
+		super();
+		this.des = des;
+		this.type = type;
+		this.date = date;
+		this.etat = etat;
+		this.motifRefus = motifRefus;
+		this.notifications = notifications;
+		this.user = user;
+	}
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+	public String getMotifRefus() {
+		return motifRefus;
+	}
+	public void setMotifRefus(String motifRefus) {
+		this.motifRefus = motifRefus;
+	}
+	@ManyToOne(fetch = FetchType.EAGER)
     private User user;
 	public int getId() {
+		
 		return id;
+	}
+	
+	public Demande(int id, String des, String type, LocalDate date, String etat, String motifRefus, User user) {
+		super();
+		this.id = id;
+		this.des = des;
+		this.type = type;
+		this.date = date;
+		this.etat = etat;
+		this.motifRefus = motifRefus;
+		this.user = user;
+	}
+	public Demande(String des, String type, LocalDate date, String etat, String motifRefus, User user) {
+		super();
+		this.des = des;
+		this.type = type;
+		this.date = date;
+		this.etat = etat;
+		this.motifRefus = motifRefus;
+		this.user = user;
 	}
 	public void setId(int id) {
 		this.id = id;
